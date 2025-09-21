@@ -1,36 +1,34 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import observers.Observer;
 
 public class AnalyseurDeTexte {
-	public static void main(String[] args) throws IOException {
-		BufferedReader lecteurAvecBuffer = null;
+	private final ArrayList<Observer> observers = new ArrayList<>();
+
+	public AnalyseurDeTexte(Observer... observers) {
+		this.observers.addAll(Arrays.asList(observers));
+	}
+
+	public void registerObserver(Observer o) { observers.add(o); }
+
+	public void lireFichier(File f) throws IOException {
+		BufferedReader lecteurAvecBuffer;
 		String ligne;
-		int nbrMots = 0, nbrLignes = 0, nbrPalindromes = 0, nbrBelgique = 0;
+
 		try {
-			lecteurAvecBuffer = new BufferedReader(new FileReader(args[0]));
+			lecteurAvecBuffer = new BufferedReader(new FileReader(f));
 		} catch (FileNotFoundException e) {
 			System.out.println("Erreur d'ouverture");
+			return;
 		}
-		while ((ligne = lecteurAvecBuffer.readLine()) != null) {
-			nbrLignes++;
-			if (ligne.contains("Belgique")) {
-				nbrBelgique++;
-			}
-			for (String mot : ligne.trim().split(" ")) {
-				nbrMots++;
-				StringBuffer temp = new StringBuffer(mot);
-				if (mot.equals(temp.reverse().toString())) {
-					nbrPalindromes++;
-				}
-			}
 
+		while ((ligne = lecteurAvecBuffer.readLine()) != null) {
+			final String l = ligne;
+			observers.forEach(o -> o.traiterLigne(l));
 		}
+
 		lecteurAvecBuffer.close();
-		System.out.println("Il y avait " + nbrLignes + " lignes.");
-		System.out.println("Il y avait " + nbrMots + " mots.");
-		System.out.println("Il y avait " + nbrPalindromes + " palindromes.");
-		System.out.println("Il y avait " + nbrBelgique + " lignes contenant Belgique.");
+		observers.forEach(Observer::result);
 	}
 }

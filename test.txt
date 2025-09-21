@@ -1,0 +1,7 @@
+Bonjour tout le monde
+Ceci est une ligne de test
+Belgique est un beau pays
+Le mot radar est un palindrome
+La phrase suivante contient le mot Belgique encore
+kayak est aussi un palindrome
+Une autre ligne sans rien de spécial
