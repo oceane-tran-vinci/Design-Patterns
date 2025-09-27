@@ -4,6 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Design_patterns.iml" filepath="$PROJECT_DIR$/Design_patterns.iml" />
       <module fileurl="file://$PROJECT_DIR$/Fiche1/Fiche1.iml" filepath="$PROJECT_DIR$/Fiche1/Fiche1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Fiche2_ex1/Fiche2_ex1.iml" filepath="$PROJECT_DIR$/Fiche2_ex1/Fiche2_ex1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Fiche2_ex2/Fiche2_ex2.iml" filepath="$PROJECT_DIR$/Fiche2_ex2/Fiche2_ex2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Fiche2_ex3/Fiche2_ex3.iml" filepath="$PROJECT_DIR$/Fiche2_ex3/Fiche2_ex3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Fiche2_ex4/Fiche2_ex4.iml" filepath="$PROJECT_DIR$/Fiche2_ex4/Fiche2_ex4.iml" />
     </modules>
   </component>
 </project>

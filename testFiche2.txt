@@ -1,0 +1,9 @@
+Bonjour à tous,
+ce fichier sert à tester les programmes.
+
+Voici quelques mots :
+tigre tomate train table tennis tomate taxi
+radar kayak elle level rotator
+chien pomme mango pizza sauce sucre
+bonjour ordinateur programmation Java cours
+test texte travail tutoriel théorie
