@@ -1,10 +1,10 @@
 package strategies;
 
-public class Decorator implements Strategy {
+public class DecoratorCompteur implements Strategy {
   private Strategy s;
   private int compteur;
 
-  public Decorator(Strategy s) {
+  public DecoratorCompteur(Strategy s) {
     this.s = s;
     this.compteur = 0;
   }

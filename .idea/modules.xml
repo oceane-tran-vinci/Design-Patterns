@@ -8,6 +8,11 @@
       <module fileurl="file://$PROJECT_DIR$/Fiche2_ex2/Fiche2_ex2.iml" filepath="$PROJECT_DIR$/Fiche2_ex2/Fiche2_ex2.iml" />
       <module fileurl="file://$PROJECT_DIR$/Fiche2_ex3/Fiche2_ex3.iml" filepath="$PROJECT_DIR$/Fiche2_ex3/Fiche2_ex3.iml" />
       <module fileurl="file://$PROJECT_DIR$/Fiche2_ex4/Fiche2_ex4.iml" filepath="$PROJECT_DIR$/Fiche2_ex4/Fiche2_ex4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Fiche3_demo_Factories/Fiche3_demo_Factories.iml" filepath="$PROJECT_DIR$/Fiche3_demo_Factories/Fiche3_demo_Factories.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Fiche3_demo_LogicielAbstractFactory/Fiche3_demo_LogicielAbstractFactory.iml" filepath="$PROJECT_DIR$/Fiche3_demo_LogicielAbstractFactory/Fiche3_demo_LogicielAbstractFactory.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Fiche3_demo_LogicielDessinFactoryMethod/Fiche3_demo_LogicielDessinFactoryMethod.iml" filepath="$PROJECT_DIR$/Fiche3_demo_LogicielDessinFactoryMethod/Fiche3_demo_LogicielDessinFactoryMethod.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Fiche3_ex3Aa_FactoryMethod/Fiche3_ex3Aa_FactoryMethod.iml" filepath="$PROJECT_DIR$/Fiche3_ex3Aa_FactoryMethod/Fiche3_ex3Aa_FactoryMethod.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Fiche3_ex3Ab_AbstractFactory/Fiche3_ex3Ab_AbstractFactory.iml" filepath="$PROJECT_DIR$/Fiche3_ex3Ab_AbstractFactory/Fiche3_ex3Ab_AbstractFactory.iml" />
     </modules>
   </component>
 </project>

@@ -2,7 +2,7 @@ import java.io.IOException;
 import strategies.ANDComposite;
 import strategies.CommenceParStrategy;
 import strategies.DeLongueurStrategy;
-import strategies.Decorator;
+import strategies.DecoratorCompteur;
 import strategies.EtComposite;
 import strategies.NOTComposite;
 import strategies.ORComposite;
@@ -18,12 +18,20 @@ public class Main {
       //ex 1
       System.out.println("**** starts with 't' Sans compteur (sans decorateur)****");
       listerMots.imprimerStrategy(new CommenceParStrategy('t'));
+      //ex 4 DecorateurCompteur a ajouté
       System.out.println("\nstarts with 't' Avec compteur (avec decorateur)");
-      Decorator d = new Decorator(new CommenceParStrategy('t'));
-      listerMots.imprimerStrategy(d);
-      System.out.println(d.getCompteur());
-      System.out.println("\nLength");
+      DecoratorCompteur d1 = new DecoratorCompteur(new CommenceParStrategy('t'));
+      listerMots.imprimerStrategy(d1);
+      System.out.println("Nombre de mots trouvés : "+d1.getCompteur());
+
+      System.out.println("\nLength Sans compteur");
       listerMots.imprimerStrategy(new DeLongueurStrategy(4));
+      //ex 4 DecorateurCompteur a ajouté
+      System.out.println("\nLength Avec compteur");
+      DecoratorCompteur d2 = new DecoratorCompteur(new DeLongueurStrategy(4));
+      listerMots.imprimerStrategy(d2);
+      System.out.println("Nombre de mots trouvés : "+d2.getCompteur());
+
       System.out.println("\nPalindrome");
       listerMots.imprimerStrategy(new PalydromeStrategy());
       //ex 2
