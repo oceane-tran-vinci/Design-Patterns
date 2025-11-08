@@ -27,13 +27,22 @@ public class PatternRobots {
 	}
 	
 	public static void main(String[] args) {
+		/*1) BUILDER*/
 		// un robot avec un canon de 10, un bouclier de 2, une fr�quence de tir de 100 et qui a re�u une am�lioration de canon multipliant la puissance de ce dernier par 2.
 		Robot robot1= new RobotImpl.Builder("Robot 1").canon(10).shield(2).freq(100).build();
-
 		// un robot avec un canon de 9, un bouclier de 3, une fr�quence de tir de 90
 		// et qui a re�u une am�lioration de bouclier multipliant ce dernier par 2 et une am�lioration de mitigation des d�gats qui r�duit les points de vue perdus par 2.
 		Robot robot2= new RobotImpl.Builder("Robot 2").canon(9).shield(3).freq(90).build();
 
+		/*2) DECORATOR */
+		// Robot 1 : Canon = 10, Shield = 2, Freq = 100
+		// Amélioration : canon multiplié par 2
+		Robot super_robot1= new CanonDecorator(new RobotImpl.Builder("Super Robot 1").canon(10).shield(2).freq(100).build());
+		// Robot 2 : Canon = 9, Shield = 3, Freq = 90
+		// Améliorations : bouclier ×2 et life des dégâts ÷2
+		Robot super_robot2= new LifeDecorator(new ShieldDecorator(new RobotImpl.Builder("Super Robot 2").canon(9).shield(3).freq(90).build()));
+
 		fight(robot1, robot2);
+		fight(super_robot1, super_robot2);
 	}
 }
