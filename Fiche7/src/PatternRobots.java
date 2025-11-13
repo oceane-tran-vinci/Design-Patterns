@@ -1,3 +1,5 @@
+import javax.sound.midi.Soundbank;
+
 public class PatternRobots {
 	
 	public static void fight(Robot robot1, Robot robot2) {
@@ -42,7 +44,29 @@ public class PatternRobots {
 		// Améliorations : bouclier ×2 et life des dégâts ÷2
 		Robot super_robot2= new LifeDecorator(new ShieldDecorator(new RobotImpl.Builder("Super Robot 2").canon(9).shield(3).freq(90).build()));
 
+		/*3.1) FlyweightFactory */
+		FlyweightFactory fly = new FlyweightFactory();
+		fly.addFlyweight("picvert", new ConcreteFactoryPicVert());
+		fly.addFlyweight("grosse_berta", new ConcreteFactoryGrosseBerta());
+		fly.addFlyweight("tank", new ConcreteFactoryTank());
+
+		Robot FF_picvert = fly.createRobot("picvert");
+		Robot FF_grosse_berta = fly.createRobot("grosse_berta");
+		Robot FF_tank = fly.createRobot("tank");
+
+		System.out.println("Builder : \n");
 		fight(robot1, robot2);
+		System.out.println("\n");
+
+		System.out.println("Decorator : \n");
 		fight(super_robot1, super_robot2);
+		System.out.println("\n");
+
+		System.out.println("FlyweightFactory : \n");
+		fight(FF_picvert, FF_tank);
+		fight(FF_grosse_berta, FF_tank);
+		fight(FF_picvert, FF_grosse_berta);
+		fight(FF_tank, FF_picvert);
+		System.out.println("\n");
 	}
 }
