@@ -62,11 +62,7 @@ public class PatternRobots {
 		fight(super_robot1, super_robot2);
 		System.out.println("\n");
 
-		System.out.println("FlyweightFactory : \n");
-		fight(FF_picvert, FF_tank);
-		fight(FF_grosse_berta, FF_tank);
-		fight(FF_picvert, FF_grosse_berta);
-		fight(FF_tank, FF_picvert);
-		System.out.println("\n");
+		System.out.println("FlyweightPrototype : \n");
+
 	}
 }
