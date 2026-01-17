@@ -7,7 +7,14 @@ import observers.ObsPalindromes;
 
 public class Main {
   public static void main(String[] args) {
-    AnalyseurDeTexte analyseurDeTexte = new AnalyseurDeTexte(new ObsLignes(), new ObsMots(), new ObsPalindromes(), new ObsLignesContenantMot("Belgique"));
+    //Créer l'event principam
+    AnalyseurDeTexte analyseurDeTexte = new AnalyseurDeTexte();
+
+    //Ajout des traitements à l'event
+    analyseurDeTexte.registerObserver(new ObsLignes());
+    analyseurDeTexte.registerObserver(new ObsMots());
+    analyseurDeTexte.registerObserver(new ObsPalindromes());
+    analyseurDeTexte.registerObserver(new ObsLignesContenantMot("Belgique"));
 
     try {
       analyseurDeTexte.lireFichier(new File("testFiche1.txt"));

@@ -4,13 +4,16 @@ import java.util.Arrays;
 import observers.Observer;
 
 public class AnalyseurDeTexte {
+	//observerCollections
 	private final ArrayList<Observer> observers = new ArrayList<>();
 
-	public AnalyseurDeTexte(Observer... observers) {
-		this.observers.addAll(Arrays.asList(observers));
+	public void registerObserver(Observer o) {
+		observers.add(o);
 	}
 
-	public void registerObserver(Observer o) { observers.add(o); }
+	public void unregisterObserver(Observer o) {
+		observers.remove(o);
+	}
 
 	public void lireFichier(File f) throws IOException {
 		BufferedReader lecteurAvecBuffer;
