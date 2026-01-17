@@ -1,6 +1,6 @@
 import java.util.*;
 
-/** Cette classe implémente le jeu de la vie */
+/** Cette classe implï¿½mente le jeu de la vie */
 public class JeuDeLaVie {
 	private int lignes;
 	private int colonnes;
@@ -48,21 +48,21 @@ public class JeuDeLaVie {
 	// Inverse le statut de la cellule de position li,co
 	public void toggle(int li, int co) {
 		grille[li][co].toggle();
-		prévenirEspions();
+		prevenirEspions();
 	}
 
-	// Cette méthode implemente les règles du Jeu de la Vie.
+	// Cette mï¿½thode implemente les rï¿½gles du Jeu de la Vie.
 	// Pour chaque cellule,
 	// on trouve le nombre de voisins et on rend la cellule vivante selon
-	// les règles définies dans le parcourt
+	// les rï¿½gles dï¿½finies dans le parcourt
 	public void avancer() {
 		ArrayList<Activite> activites = new ArrayList<Activite>();
 		for (int i = 0; i < lignes; i++)
 			for (int j = 0; j < colonnes; j++)
 				grille[i][j].generer(this, activites, parcourt);
-		for (Activite activité : activites)
-			activité.activer();
-		prévenirEspions();
+		for (Activite activite : activites)
+			activite.activer();
+		prevenirEspions();
 	}
 
 	// Ajoute un espion.
@@ -73,12 +73,12 @@ public class JeuDeLaVie {
 	}
 
 	// Supprime un espion.
-	public void détacher(Espion espion) {
+	public void detacher(Espion espion) {
 		this.espions.remove(espion);
 	}
 
 	// Informe tous les espions de tenir compte des renseignements obtenus.
-	public void prévenirEspions() {
+	public void prevenirEspions() {
 		for (Espion espion : espions)
 			espion.utiliserRenseignements();
 	}
