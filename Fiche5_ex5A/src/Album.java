@@ -2,11 +2,14 @@ import java.lang.Thread.Builder;
 
 public class Album {
 
+  // 1) Champs du "Product" (Album) : immuables => final
   private final String titre, nomArtiste, label, producter, paysArtiste, version, genre;
   private final int anneeParution, anneeParutionOriginale, debitQualiteStandard, debitEnModeAbonne;
   private final boolean isRemasterise;
 
-  public Album(Builder builder) {
+  // 2) Constructeur PRIVATE : on ne construit Album que via Builder.build()
+  private Album(Builder builder) {
+    // On copie toutes les valeurs du builder vers l'objet final
     this.titre = builder.titre;
     this.nomArtiste = builder.nomArtiste;
     this.label = builder.label;
@@ -22,6 +25,7 @@ public class Album {
   }
 
 
+  // 3) Getters (pas de setters)
   public String getTitre() {
     return titre;
   }
@@ -71,17 +75,23 @@ public class Album {
   }
 
 
+  // 4) Builder interne (static = pas besoin d'une instance d'Album pour l'utiliser)
   public static class Builder {
+    // 4.1 Champs obligatoires => final
     private final String titre, nomArtiste;
+
+    // 4.2 Champs optionnels (par défaut null / 0 / false)
     private String label, producter, paysArtiste, version, genre;
     private int anneeParution, anneeParutionOriginale, debitQualiteStandard, debitEnModeAbonne;
     private boolean isRemasterise;
 
+    //4.3 Constructeur qui prend que les attributs obligatoire
     public Builder(String titre, String nomArtiste) {
       this.titre = titre;
       this.nomArtiste = nomArtiste;
     }
 
+    //4.3 Les méthodes chainables (les “setter-like”)
     public Builder label (String label) {
       this.label = label;
       return this;
@@ -132,6 +142,7 @@ public class Album {
       return this;
     }
 
+    //4.4 La méthode build()
     public Album build() {
       return new Album(this);
     }
