@@ -19,6 +19,7 @@ public class ListerMots {
             StringTokenizer mots = new StringTokenizer(buffer, " \t.;(){}\"'*=:!/\\");
             while (mots.hasMoreTokens()) {
                 String mot = mots.nextToken();
+                //condition a changer par rapport à ListerMot1,2,3 ici que ça fait OU
                 if (strategy.estValide(mot))
                     System.out.println(mot);
             }

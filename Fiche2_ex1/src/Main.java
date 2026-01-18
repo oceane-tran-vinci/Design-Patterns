@@ -9,12 +9,12 @@ public class Main {
         ListerMots listerMots = new ListerMots("testFiche2.txt");
 
         try {
-            System.out.println("starts with 't'");
+            System.out.println("Starts with 't'");
             listerMots.imprimerStrategy(new CommenceParStrategy('t'));
             System.out.println("\nLength");
             listerMots.imprimerStrategy(new DeLongueurStrategy(4));
             System.out.println("\nPalindrome");
-            listerMots.imprimerStrategy(new PalydromeStrategy()   );
+            listerMots.imprimerStrategy(new PalydromeStrategy());
 
         } catch (IOException e) {
             throw new RuntimeException(e);
