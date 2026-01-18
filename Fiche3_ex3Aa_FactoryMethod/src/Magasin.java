@@ -5,6 +5,8 @@ public abstract class Magasin {
   private Map<String, Produit> map= new HashMap<String,Produit>();
 
   //this. car méthode dans la classe
+  //La méthode ajouter() contient l’algorithme commun,
+  // tandis que ajouterProduit() est la Factory Method qui est redéfinie dans les sous-classes pour créer le bon produit.
   public void ajouter(String name, int anneeDeParution){
     Produit produit = this.ajouterProduit(name, anneeDeParution);
     map.put(name,produit);
