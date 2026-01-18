@@ -1,7 +1,4 @@
-import java.lang.Thread.Builder;
-
 public class Album {
-
   // 1) Champs du "Product" (Album) : immuables => final
   private final String titre, nomArtiste, label, producter, paysArtiste, version, genre;
   private final int anneeParution, anneeParutionOriginale, debitQualiteStandard, debitEnModeAbonne;
@@ -23,7 +20,6 @@ public class Album {
     this.debitEnModeAbonne = builder.debitEnModeAbonne;
     this.isRemasterise = builder.isRemasterise;
   }
-
 
   // 3) Getters (pas de setters)
   public String getTitre() {
@@ -146,7 +142,6 @@ public class Album {
     public Album build() {
       return new Album(this);
     }
-
   }
 
 }
