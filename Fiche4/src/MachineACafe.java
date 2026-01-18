@@ -1,90 +1,120 @@
 public class MachineACafe {
 
+  /*
+   * STATE = les 3 états de la machine (diagramme UML)
+   * Chaque état contient :
+   * - soit le comportement "par défaut" (hérité)
+   * - soit un comportement spécial (override)
+   */
   public enum State {
+
+    /*
+     * IDLE = aucune monnaie (montantEnCours = 0)
+     * Cas spécial : si on sélectionne une boisson → pas assez directement
+     */
     IDLE {
       @Override
-      public void rendreMonnaie(MachineACafe machineACafe) {
-        machineACafe.setState(State.IDLE);
+      public void rendreMonnaie(MachineACafe m) {
+        // Rien à rendre, on reste idle
+        m.setState(State.IDLE);
       }
 
       @Override
-      public void selectionnerBoisson(ToucheBoisson toucheBoisson, MachineACafe machineACafe) {
-        machineACafe.afficherPasAssez(toucheBoisson);
+      public void selectionnerBoisson(ToucheBoisson b, MachineACafe m) {
+        // Sans monnaie : toujours "pas assez"
+        m.afficherPasAssez(b);
       }
+    },
 
-    }, COLLECTE {
+    /*
+     * COLLECTE = on a introduit de la monnaie
+     * Ici aucun override : on utilise les comportements par défaut (plus bas)
+     */
+    COLLECTE { },
 
-    }, PAS_ASSEZ {
+    /*
+     * PAS_ASSEZ = une boisson a été choisie mais il manque de la monnaie
+     * Cas spécial :
+     * - on ne peut pas choisir une autre boisson
+     * - entrerMonnaie doit vérifier si on atteint le prix de la boisson en attente
+     */
+    PAS_ASSEZ {
+
       @Override
-      public void selectionnerBoisson(ToucheBoisson toucheBoisson, MachineACafe machineACafe) {
+      public void selectionnerBoisson(ToucheBoisson b, MachineACafe m) {
+        // Règle de l'énoncé : interdit de sélectionner autre chose si pas assez
         throw new IllegalStateException();
       }
 
       @Override
-      public void entrerMonnaie(Piece piece, MachineACafe machineACafe) {
-        machineACafe.montantEnCours += piece.getValeur();
-        machineACafe.afficherMontant();
+      public void entrerMonnaie(Piece p, MachineACafe m) {
+        // On ajoute la pièce
+        m.montantEnCours += p.getValeur();
+        m.afficherMontant();
 
-        if (machineACafe.boisson.getPrix() > machineACafe.montantEnCours) {
-          machineACafe.afficherPasAssez(machineACafe.boisson);
+        // Si toujours pas assez : on ré-affiche le manque
+        if (m.boisson.getPrix() > m.montantEnCours) {
+          m.afficherPasAssez(m.boisson);
         } else {
-          machineACafe.montantEnCours -= machineACafe.boisson.getPrix();
-          machineACafe.afficherBoisson(machineACafe.boisson);
-          machineACafe.boisson = null;
-          machineACafe.afficherMontant();
-          if (machineACafe.montantEnCours == 0) {
-            machineACafe.setState(State.IDLE);
-          } else {
-            machineACafe.setState(State.COLLECTE);
-          }
+          // Sinon : on sert la boisson en attente
+          m.montantEnCours -= m.boisson.getPrix();
+          m.afficherBoisson(m.boisson);
+          m.boisson = null;
+
+          // Puis on décide le nouvel état selon le reste de monnaie
+          m.afficherMontant();
+          if (m.montantEnCours == 0) m.setState(State.IDLE);
+          else m.setState(State.COLLECTE);
         }
       }
-
     };
 
-    public void rendreMonnaie(MachineACafe machineACafe) {
-      machineACafe.afficherRetour();
-      machineACafe.montantEnCours = 0;
-      machineACafe.boisson = null;
-      machineACafe.setState(State.IDLE);
+    /*
+     * --- COMPORTEMENTS PAR DEFAUT ---
+     * Ces méthodes s'appliquent aux états qui ne les override pas
+     */
+
+    public void rendreMonnaie(MachineACafe m) {
+      // Rendre tout et reset
+      m.afficherRetour();
+      m.montantEnCours = 0;
+      m.boisson = null;
+      m.setState(State.IDLE);
     }
 
-    public void selectionnerBoisson(ToucheBoisson toucheBoisson, MachineACafe machineACafe) {
-      if (toucheBoisson.getPrix() > machineACafe.montantEnCours) {
-        machineACafe.boisson = toucheBoisson;
-        machineACafe.afficherPasAssez(machineACafe.boisson);
-        machineACafe.boisson = toucheBoisson;
-        machineACafe.setState(State.PAS_ASSEZ);
+    public void selectionnerBoisson(ToucheBoisson b, MachineACafe m) {
+      // Si pas assez : on mémorise la boisson et on passe en PAS_ASSEZ
+      if (b.getPrix() > m.montantEnCours) {
+        m.boisson = b;
+        m.afficherPasAssez(m.boisson);
+        m.setState(State.PAS_ASSEZ);
         return;
       }
-      machineACafe.montantEnCours -= toucheBoisson.getPrix();
-      machineACafe.afficherBoisson(toucheBoisson);
-      machineACafe.afficherMontant();
-      if (machineACafe.montantEnCours == 0) {
-        machineACafe.setState(State.IDLE);
-      } else {
-        machineACafe.setState(State.COLLECTE);
-      }
+
+      // Sinon on peut servir direct
+      m.montantEnCours -= b.getPrix();
+      m.afficherBoisson(b);
+      m.afficherMontant();
+
+      // État dépend du montant restant
+      if (m.montantEnCours == 0) m.setState(State.IDLE);
+      else m.setState(State.COLLECTE);
     }
 
+    public void entrerMonnaie(Piece p, MachineACafe m) {
+      // Ajout monnaie + affichage
+      m.montantEnCours += p.getValeur();
+      m.afficherMontant();
 
-    public void entrerMonnaie(Piece piece, MachineACafe machineACafe) {
-      machineACafe.montantEnCours += piece.getValeur();
-      machineACafe.afficherMontant();
-
-      machineACafe.setState(State.COLLECTE);
+      // Dès qu'on a de la monnaie : on est en COLLECTE
+      m.setState(State.COLLECTE);
     }
   }
 
-//	public final int idle = 0;
-//	public final int collecte = 1;
-//	public final int pasAssez = 2;
-
-  private int montantEnCours = 0;
-  //	private int etatCourant = idle;
-  private ToucheBoisson boisson = null;
-
-  private State state;
+  // --------- DONNEES DU CONTEXT (MachineACafe) ---------
+  private int montantEnCours = 0;     // argent disponible
+  private ToucheBoisson boisson = null; // boisson en attente (uniquement en PAS_ASSEZ)
+  private State state;               // état courant (remplace etatCourant int)
 
   public MachineACafe() {
     setState(State.IDLE);
@@ -94,85 +124,26 @@ public class MachineACafe {
     this.state = state;
   }
 
-
-  public void afficherMontant() {
-    System.out.println(montantEnCours + " cents disponibles");
+  // --------- AFFICHAGES (inchangés) ---------
+  public void afficherMontant() { System.out.println(montantEnCours + " cents disponibles"); }
+  public void afficherRetour() { System.out.println(montantEnCours + " cents rendus"); }
+  public void afficherPasAssez(ToucheBoisson b) {
+    System.out.println("Vous n'avez pas introduit un montant suffisant pour un " + b);
+    System.out.println("Il manque encore " + (b.getPrix() - montantEnCours) + " cents");
   }
+  public void afficherBoisson(ToucheBoisson b) { System.out.println("Voici un " + b); }
 
-  public void afficherRetour() {
-    System.out.println(montantEnCours + " cents rendus");
-  }
-
-  public void afficherPasAssez(ToucheBoisson toucheBoisson) {
-    System.out.println("Vous n'avez pas introduit un montant suffisant pour un " + toucheBoisson);
-    System.out.println("Il manque encore " + (toucheBoisson.getPrix() - montantEnCours) + " cents");
-  }
-
-  public void afficherBoisson(ToucheBoisson toucheBoisson) {
-    System.out.println("Voici un " + toucheBoisson);
-
-  }
-
+  // --------- API PUBLIQUE (délégation -> State) ---------
   public void entrerMonnaie(Piece piece) {
     state.entrerMonnaie(piece, this);
-    //le code en dessous est diviser en 2 :
-    /*1) si etatCourant != pas assez (dc à mettre ds classe parent, générale)
-     * 2) si etatCourant == pas assez (à mettre ds énumérer PAS_ASSEZ) */
-    /*montantEnCours += piece.getValeur();
-    afficherMontant();
-    if (etatCourant != pasAssez) {
-      etatCourant = collecte;
-    } else if (boisson.getPrix() > montantEnCours) {
-      afficherPasAssez(boisson);
-    } else {
-      montantEnCours -= boisson.getPrix();
-      afficherBoisson(boisson);
-      boisson = null;
-      afficherMontant();
-      if (montantEnCours == 0) {
-        etatCourant = idle;
-      } else {
-        etatCourant = collecte;
-      }
-    }
-     */
   }
 
   public void selectionnerBoisson(ToucheBoisson toucheBoisson) {
     state.selectionnerBoisson(toucheBoisson, this);
-        /*if (etatCourant == pasAssez)
-            throw new IllegalStateException();
-        if (etatCourant == idle){
-            afficherPasAssez(toucheBoisson);
-            return;
-        }
-        if (toucheBoisson.getPrix() > montantEnCours) {
-            boisson = toucheBoisson;
-            afficherPasAssez(boisson);
-            boisson = toucheBoisson;
-            etatCourant = pasAssez;
-            return;
-        }
-        montantEnCours -= toucheBoisson.getPrix();
-        afficherBoisson(toucheBoisson);
-        afficherMontant();
-        if (montantEnCours == 0)
-            etatCourant = idle;
-        else
-            etatCourant = collecte;
-
-         */
   }
 
   public void rendreMonnaie() {
     state.rendreMonnaie(this);
-        /*if (etatCourant != idle) {
-          afficherRetour();
-          montantEnCours = 0;
-          boisson = null;
-        }
-        etatCourant = idle;
-         */
   }
 }
 
