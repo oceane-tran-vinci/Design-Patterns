@@ -14,7 +14,7 @@ public class Main {
     ListerMots listerMots = new ListerMots("testFiche2.txt");
 
     try {
-      //ex 1
+      /*ex 1
       System.out.println("**** starts with 't' ****");
       listerMots.imprimerStrategy(new CommenceParStrategy('t'));
       System.out.println("\nLength");
@@ -30,6 +30,7 @@ public class Main {
           new ORComposite(new DeLongueurStrategy(3), new DeLongueurStrategy(5)));
       System.out.println("\nNOT");
       listerMots.imprimerStrategy(new NOTComposite(new CommenceParStrategy('t')));
+       */
       //ex3
       System.out.println("\n**** ET****");
       listerMots.imprimerStrategy(
