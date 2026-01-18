@@ -13,22 +13,23 @@ import java.util.List;
  */
 
 public class OuComposite implements Strategy {
+  // 1️⃣ Le composite contient PLUSIEURS stratégies
   List<Strategy> strategies = new ArrayList<>();
 
+  // 2️⃣ Constructeur : reçoit toutes les stratégies à combiner
   public OuComposite(Strategy... s) {
     this.strategies.addAll(Arrays.asList(s));
   }
 
+  // 3️⃣ Même méthode que Strategy (component)
   @Override
   public boolean estValide(String mot) {
-    boolean or = false;
-
+    // 4️⃣ OR logique : une seule vraie suffit
     for (Strategy s : strategies) {
       if (s.estValide(mot)) {
-        or = true;
+        return true; // UNE vraie → tout vrai
       }
-
     }
-    return or;
+    return false; // aucune vraie
   }
 }
