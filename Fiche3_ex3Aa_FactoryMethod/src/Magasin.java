@@ -4,18 +4,16 @@ import java.util.Map;
 public abstract class Magasin {
   private Map<String, Produit> map= new HashMap<String,Produit>();
 
-  //this. car méthode dans la classe
-  //La méthode ajouter() contient l’algorithme commun,
-  // tandis que ajouterProduit() est la Factory Method qui est redéfinie dans les sous-classes pour créer le bon produit.
+  //ajouter réellement le produit dans le magasin.
   public void ajouter(String name, int anneeDeParution){
-    Produit produit = this.ajouterProduit(name, anneeDeParution);
-    map.put(name,produit);
+    Produit produit = this.ajouterProduit(name, anneeDeParution); //1. demander la création du bon Produit
+    map.put(name,produit);                                        //2. le stocker dans la Map du magasin
   }
 
   public Produit retourneProduit(String name){
     return map.get(name);
   }
 
-  //ajouter une méthode abstract dans la class dc la classe doit ê abstract aussi pas oublier de le mettre au debut de la classe
+  //seulement créer le bon type de Produit. C’est la Factory Method.
   public abstract Produit ajouterProduit(String name, int anneeDeParution);
 }
